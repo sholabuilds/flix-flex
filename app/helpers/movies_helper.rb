@@ -9,7 +9,6 @@ module MoviesHelper
     end
 
     def year_of(movie)
-        # movie.release_date.strftime("%d %b %Y")
         movie.release_date.strftime("%d %b %Y")
     end
 end
