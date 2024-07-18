@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.all
+    @movies = Movie.previous_releases
   end
 
   def show
@@ -41,6 +41,6 @@ class MoviesController < ApplicationController
 
   def movies_params
      # the :movie sym is derived from the key name in the request params
-    params.require(:movie).permit(:title, :description, :rating, :total_gross, :release_date)
+    params.require(:movie).permit(:title, :description, :rating, :total_gross, :release_date, :director, :duration, :image_file_name)
   end
 end

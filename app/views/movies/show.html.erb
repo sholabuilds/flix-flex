@@ -1,19 +1,25 @@
 <section class="movie-details">
-  <div class="details">
-    <h1><%= @movie.title %></h1>
-    <h2>
-      <%= year_of(@movie) %> &bull; <%= @movie.rating %>
-    </h2>
-    <p>
-      <%= @movie.description %>
-    </p>
-    <table>
-      <tr>
-        <th>Total Gross:</th>
-        <td><%= total_gross(@movie) %></td>
-      </tr>
-    </table>
-  </div>
+    <div class="image">
+        <%= image_tag @movie.image_file_name %>
+    </div>
+    <div class="details">
+        <h1><%= @movie.title %></h1>
+        <h2>
+        <%= year_of(@movie) %> &bull; <%= @movie.rating %> &bull; <%= @movie.duration %>
+        </h2>
+        <p>
+        <i><strong>Director:</strong> <%= @movie.director %> </i>
+        </p>
+        <p>
+        <%= @movie.description %>
+        </p>
+        <table>
+        <tr>
+            <th>Total Gross:</th>
+            <td><%= total_gross(@movie) %></td>
+        </tr>
+        </table>
+    </div>
 </section>
 
 <section class="admin">
