@@ -2,9 +2,9 @@ class Movie < ApplicationRecord
 
     RATINGS = %w(G PG PG-13 R NC-17)
 
-    validates :title, :release_date, :duration, presence: true
+    validates :title, :release_date, :director, presence: true
     
-    validates :duration, length: { minimum: 25 }
+    validates :description, length: { minimum: 25 }
     
     validates :total_gross, numericality: { greater_than_or_equal_to: 0 }
 
