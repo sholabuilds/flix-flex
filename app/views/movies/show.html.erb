@@ -5,19 +5,22 @@
     <div class="details">
         <h1><%= @movie.title %></h1>
         <h2>
-        <%= year_of(@movie) %> &bull; <%= @movie.rating %> &bull; <%= @movie.duration %>mins
+            <%= year_of(@movie) %> &bull; <%= @movie.rating %> &bull; <%= @movie.duration %>mins
         </h2>
+        <div class="reviews">
+            <i><%= link_to pluralize(@movie.reviews.count, "review"), movie_reviews_path(@movie) %></i>
+        </div>
         <p>
-        <i><strong>Director:</strong> <%= @movie.director %> </i>
+            <i><strong>Director:</strong> <%= @movie.director %> </i>
         </p>
         <p>
-        <%= @movie.description %>
+            <%= @movie.description %>
         </p>
         <table>
-        <tr>
-            <th>Total Gross:</th>
-            <td><%= total_gross(@movie) %></td>
-        </tr>
+            <tr>
+                <th>Total Gross:</th>
+                <td><%= total_gross(@movie) %></td>
+            </tr>
         </table>
     </div>
 </section>
