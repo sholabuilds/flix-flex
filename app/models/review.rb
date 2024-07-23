@@ -1,7 +1,6 @@
 class Review < ApplicationRecord
   belongs_to :movie
 
-  # STARS = %w(1 2 3 4 5)
   STARS = [1, 2, 3, 4, 5]
 
   validates :name, presence: true
