@@ -50,6 +50,9 @@ class UsersController < ApplicationController
     end
 
     def require_correct_user
+        # since this method runs before its' associated methods
+        # the user instance variable becomes available 
+        # in the methods
         @user = User.find(params[:id])
         unless current_user?(@user) 
             redirect_to root_url, status: :see_other

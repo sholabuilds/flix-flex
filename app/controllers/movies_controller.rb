@@ -1,6 +1,23 @@
 class MoviesController < ApplicationController
+  before_action :require_signin, except: [:index, :show]
+  before_action :require_admin, except: [:index, :show]
+
   def index
     @movies = Movie.previous_releases
+  end
+
+  def new
+    @movie = Movie.new
+  end
+
+  def create
+    @movie = Movie.new(movies_params)
+
+    if @movie.save
+      redirect_to @movie, notice: "Movie successfully created"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -18,20 +35,6 @@ class MoviesController < ApplicationController
       redirect_to @movie, notice: "Movie successfully updated"
     else
       render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def new
-    @movie = Movie.new
-  end
-
-  def create
-    @movie = Movie.new(movies_params)
-
-    if @movie.save
-      redirect_to @movie, notice: "Movie successfully created"
-    else
-      render :new, status: :unprocessable_entity
     end
   end
 
