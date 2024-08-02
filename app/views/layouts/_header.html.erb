@@ -7,9 +7,24 @@
             </li>
         </ul>
         <ul class="right">
-            <li>
-                <%= link_to "Sign up", signup_path, class: "button" %>
-            </li>
+            <% if current_user %>
+                <li>
+                    <%= link_to profile_image(current_user), current_user %>
+                </li>
+                <li>
+                    <%= link_to "Account Settings", edit_user_path(current_user) %>
+                </li>
+                <li>
+                    <%= link_to "Sign Out", signout_path, class: "button", data: {turbo_method: :delete, turbo_confirm: "Are you sure want to sign out?"} %>
+                </li>
+            <% else %>
+                <li>
+                    <%= link_to "Sign in", signin_path, class: "button" %>
+                </li>
+                <li>
+                    <%= link_to "Sign up", signup_path, class: "button" %>
+                </li>
+            <% end %>
         </ul>
     </nav>
 </header>
