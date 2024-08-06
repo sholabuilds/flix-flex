@@ -12,6 +12,7 @@ class ReviewsController < ApplicationController
 
     def create
         @review = @movie.reviews.new(reviews_params)
+        # associates the current signed in user to the review
         @review.user = current_user
 
         if @review.save

@@ -20,6 +20,7 @@
             <% @reviews.each do |review| %>
                 <div class="review">
                     <div class="details">
+                        <%= profile_image(review.user, 35) %>
                         <span class="title">
                             <%= link_to review.movie.title, review.movie %>
                         </span>
@@ -35,4 +36,13 @@
             <% end %>
         <% end %>
     </section>
+
+    <% if @favourite_movies.present? %>
+        <h3>Favourite Movies</h3>
+        <div class="favorite-movies">
+            <% @favourite_movies.each do |movie| %>
+                <%= link_to image_tag(movie.image_file_name), movie %>
+            <% end %>
+        </div>
+    <% end %>
 </section>
