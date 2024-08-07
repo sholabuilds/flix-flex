@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :favourites
    
     root "movies#index"
 
@@ -10,6 +9,7 @@ Rails.application.routes.draw do
     # patch "movies/:id" => "movies#update"
     resources :movies do
       resources :reviews
+      resources :favourites
     end
 
     resources :users
