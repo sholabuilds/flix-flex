@@ -23,6 +23,8 @@ class MoviesController < ApplicationController
   def show
     @movie = Movie.find(params[:id])
     @fans = @movie.fans
+    @genres = @movie.genres.order(:name)
+
     if current_user
       @favourite = current_user.favourites.find_by(movie_id: @movie.id)
     end
@@ -52,6 +54,6 @@ class MoviesController < ApplicationController
 
   def movies_params
      # the :movie sym is derived from the key name in the request params
-    params.require(:movie).permit(:title, :description, :rating, :total_gross, :release_date, :director, :duration, :image_file_name)
+    params.require(:movie).permit(:title, :description, :rating, :total_gross, :release_date, :director, :duration, :image_file_name, genre_ids: [])
   end
 end
