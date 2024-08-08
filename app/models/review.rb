@@ -2,6 +2,8 @@ class Review < ApplicationRecord
   belongs_to :movie
   belongs_to :user
 
+  scope :past_n_days, ->(no_of_days) { where("created_at >= ?", no_of_days.days.ago) }
+
   STARS = [1, 2, 3, 4, 5]
 
   validates :comment, length: {minimum: 4}

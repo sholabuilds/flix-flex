@@ -8,6 +8,20 @@ class Movie < ApplicationRecord
     has_many :characterizations, dependent: :destroy
     has_many :genres, through: :characterizations
 
+    scope :previous_releases, -> { where("release_date < ?", Time.now).order("total_gross DESC") }
+
+    scope :upcoming_releases, -> { where("release_date > ?", Time.now).order("total_gross DESC") }
+
+    scope :recent, ->(max=5) { previous_releases.limit(max) }
+
+    scope :hits, -> { previous_releases.where("total_gross > ?", 300000000).order("total_gross desc") }
+
+    scope :flops, -> { previous_releases.where("total_gross < ?", 225000000).order("total_gross asc") }
+
+    scope :grossed_less_than, ->(amount) { previous_releases.where("total_gross < ?", amount) }
+
+    scope :grossed_greater_than, ->(amount) { previous_releases.where("total_gross > ?", amount) }
+
     RATINGS = %w(G PG PG-13 R NC-17)
 
     validates :title, :release_date, :director, presence: true
@@ -25,18 +39,6 @@ class Movie < ApplicationRecord
         with: /\w+\.(jpg|png)\z/i,
         message: "must be a JPG or PNG image"
     }
-
-    def self.previous_releases
-        where("release_date < ?", Time.now).order("total_gross DESC")
-    end
-
-    def self.hit_releases
-        where("total_gross > ?", 300000000).order("total_gross desc")
-    end
-
-    def self.flop_releases
-        where("total_gross < ?", 225000000).order("total_gross asc")
-    end
 
     def self.recent_releases
         find_by("created_at", 3).order("created_at desc")
