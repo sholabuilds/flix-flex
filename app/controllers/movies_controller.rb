@@ -61,7 +61,7 @@ class MoviesController < ApplicationController
 
   def movies_params
      # the :movie sym is derived from the key name in the request params
-    params.require(:movie).permit(:title, :description, :rating, :total_gross, :release_date, :director, :duration, :image_file_name, genre_ids: [])
+    params.require(:movie).permit(:title, :description, :rating, :total_gross, :release_date, :director, :duration, :main_image, genre_ids: [])
   end
 
   def set_movie

@@ -10,6 +10,8 @@ class Movie < ApplicationRecord
     has_many :characterizations, dependent: :destroy
     has_many :genres, through: :characterizations
 
+    has_one_attached :main_image
+
     RATINGS = %w(G PG PG-13 R NC-17)
 
     validates :title, presence: true, uniqueness: true
@@ -25,10 +27,7 @@ class Movie < ApplicationRecord
             message: "%{value} is not a valid rating"
     }
 
-    validates :image_file_name, format: {
-        with: /\w+\.(jpg|png)\z/i,
-        message: "must be a JPG or PNG image"
-    }
+    validate :acceptable_image
 
     scope :previous_releases, -> { where("release_date < ?", Time.now).order("total_gross DESC") }
 
@@ -70,5 +69,18 @@ class Movie < ApplicationRecord
 
     def set_slug
         self.slug = title.parameterize
+    end
+
+    def acceptable_image
+        return unless main_image.attached?
+      
+        unless main_image.blob.byte_size <= 1.megabyte
+          errors.add(:main_image, "is too big")
+        end
+      
+        acceptable_types = ["image/jpeg", "image/png"]
+        unless acceptable_types.include?(main_image.blob.content_type)
+          errors.add(:main_image, "must be a JPEG or PNG")
+        end
     end
 end
